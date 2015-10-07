@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>OEG Creator</title>
+		<style type="text/css">
+			canvas {
+				border:black solid 1px;
+				padding: 5px;
+			}
+		</style>
+		<script src="OEGcreator.js"> </script>
+		<script>
+//domainSize is the x and y array dimension (square) of the domain
+//myNumFields is the number of humps and bumps to create
+//mySlope is the general west to east elevation rise, per cell
+//myAntiElevation is the anticline height delta
+			function launchMe() {
+//				alert("staring launch");
+				var domainSize = 100;
+				var myNumFields = document.getElementById('numFields').value * 1;
+				var mySlope = document.getElementById('theSlope').value * 1;
+				var myAntiElevation = document.getElementById('theAnti').value * 1;
+				var faultDelta = document.getElementById('theOffset').value * 1;
+				dummy = createSim(domainSize, myNumFields, mySlope, myAntiElevation, faultDelta) ;
+}
+		</script>
+	</head>
+<body>
+	<form id="inputForm">
+		<label>Number of Fields: <input id="numFields" type="text" size=30></label><br>
+		<label>Slope (per cell, increasing west to east): <input id="theSlope" type="text" size=30></label><br>
+		<label>Anticline Delta Elev: <input id="theAnti" type="text" size=30></label><br>
+		<label>Fault Offset: <input id="theOffset" type="text" size=30></label><br>
+	</form>	
+	<button onclick="launchMe()" type="button">Create Simulation!</button>
+	<hr>
+	<h4>Oil Migration Counter: <span id="theMigrationCounter"></span></h4>
+	<p>Layer 1 [0]: <span id="my0MaxMin"></span> -- Sandstone, non-oil bearing, thickens to the east</p>
+<p>Layer 2 [1]: <span id="my1MaxMin"></span> -- Thin siltstone layer, non-oil bearing, intersected by topography</p>
+<p>Layer 3 [2]: <span id="my2MaxMin"></span> -- Shale, across entire domain, partly also at surface, somewhat uniform thickness</p>
+<p>Layer 4 [3]: <span id="my3MaxMin"></span> -- Sandstone, oil/gas bearing, across entire domain</p>
+<p>Layer 5 [4]: <span id="my4MaxMin"></span> -- Shale, across entire domain</p>
+
+	<hr>
+	<h3>The layer elevations</h3>
+	    <canvas width="600" height="600" id="my0Canvas" ></canvas> 
+	    <canvas  width="600" height="600"  id="my1Canvas" ></canvas>
+	    <canvas  width="600" height="600"  id="my2Canvas" ></canvas> <br>
+	    <canvas  width="600" height="600"  id="my3Canvas" ></canvas>
+	    <canvas  width="600" height="600"  id="my4Canvas" ></canvas>
+<hr>
+	    <canvas  width="600" height="600"  id="mysurfGeoCanvas" ></canvas> 
+<hr>
+	<h3>The Oil: <span id="totalOil"></span> and The Gas</h3>
+        <canvas  width="600" height="600" id="myOilCanvas" ></canvas>
+        <canvas  width="600" height="600" id="myGasCanvas" ></canvas>
+	<hr>
+	<h3 id="my0Title"></h3>
+	<div style="font-size:30%" id="my0Values"></div>
+	<hr>
+	<h3 id="my1Title"></h3>
+	<div style="font-size:30%" id="my1Values"></div>
+	<hr>
+	<h3 id="my2Title"></h3>
+	<div style="font-size:30%" id="my2Values"></div>
+	<hr>
+	<h3 id="my3Title"></h3>
+	<div style="font-size:30%" id="my3Values"></div>
+	<hr>
+	<h3 id="my4Title"></h3>
+	<div style="font-size:30%" id="my4Values"></div>
+	<hr>
+	<div  style="font-size:30%" id="theOilGasResults"></div>
+	<hr>
+</body>
+</html>
