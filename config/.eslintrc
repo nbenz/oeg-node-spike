@@ -1,0 +1,33 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "chai": true
+  },
+  "rules": {
+    //Project rules
+    "no-undef": 2,
+    "eqeqeq": 1,
+    "curly": 2,
+    "quotes": [2, "single"],
+    "strict": 0,
+    "indent": [2, 2],
+    "new-parens": 1,
+    "max-nested-callbacks": [2, 3],
+    "no-mixed-spaces-and-tabs": 2,
+
+    //JS Best Practices
+    "block-scoped-var": 1,
+    "dot-notation": 1,
+    "no-eq-null": 1,
+    "no-fallthrough": 1,
+    "no-proto": 1,
+
+    //Node
+    "callback-return": 1,
+    "global-require": 1,
+      
+  }
+}
