@@ -1,0 +1,470 @@
+{
+  "601": {
+    "fullName": "Gravel or conglomerate (1st option)",
+    "shortName": "Grv or Cgl (1)"
+  },
+  "602": {
+    "fullName": "Gravel or conglomerate (2nd option)",
+    "shortName": "Grv or Cgl (2)"
+  },
+  "603": {
+    "fullName": "Crossbedded gravel or conglomerate",
+    "shortName": "x-bd Grv or Cgl"
+  },
+  "605": {
+    "fullName": "Breccia (1st option)",
+    "shortName": "Brec (1)"
+  },
+  "606": {
+    "fullName": "Breccia (2nd option)",
+    "shortName": "Brec (2)"
+  },
+  "607": {
+    "fullName": "Massive sand or sandstone",
+    "shortName": "Mass Sd. or Sst"
+  },
+  "608": {
+    "fullName": "Bedded sand or sandstone",
+    "shortName": "Bd Sd. or Sst"
+  },
+  "609": {
+    "fullName": "Crossbedded sand or sandstone (1st option)",
+    "shortName": "x-bd Sd. or Sst (1)"
+  },
+  "610": {
+    "fullName": "Crossbedded sand or sandstone(2nd option)",
+    "shortName": "x-bd Sd. or Sst(2)"
+  },
+  "611": {
+    "fullName": "Ripple-bedded sand or sandstone",
+    "shortName": "Rpl-Bd Sd. or Sst"
+  },
+  "612": {
+    "fullName": "Argillaceous or shaly sandstone",
+    "shortName": "arg or sh Sst"
+  },
+  "613": {
+    "fullName": "Calcareous sandstone",
+    "shortName": "calc Sst"
+  },
+  "614": {
+    "fullName": "Dolomitic sandstone",
+    "shortName": "dol Sst"
+  },
+  "616": {
+    "fullName": "Silt, siltstone, or shaly silt",
+    "shortName": "Slt, Sltst, or sh Slt"
+  },
+  "617": {
+    "fullName": "Calcareous siltstone",
+    "shortName": "calc Sltst"
+  },
+  "618": {
+    "fullName": "Dolomitic siltstone",
+    "shortName": "dol Sltst"
+  },
+  "619": {
+    "fullName": "Sandy or silty shale",
+    "shortName": "sdy or slty Sh"
+  },
+  "620": {
+    "fullName": "Clay or clay shale",
+    "shortName": "Cl or Cl Sh"
+  },
+  "621": {
+    "fullName": "Cherty shale",
+    "shortName": "cht Sh"
+  },
+  "622": {
+    "fullName": "Dolomitic shale",
+    "shortName": "dol Sh"
+  },
+  "623": {
+    "fullName": "Calcareous shale or marl",
+    "shortName": "calc Sh or marl"
+  },
+  "624": {
+    "fullName": "Carbonaceous shale",
+    "shortName": "carb Sh"
+  },
+  "625": {
+    "fullName": "Oil shale",
+    "shortName": "o Sh"
+  },
+  "626": {
+    "fullName": "Chalk",
+    "shortName": "Chk"
+  },
+  "627": {
+    "fullName": "Limestone",
+    "shortName": "Ls"
+  },
+  "628": {
+    "fullName": "Clastic limestone",
+    "shortName": "clas Ls"
+  },
+  "629": {
+    "fullName": "Fossiliferous clastic limestone",
+    "shortName": "foss clas Ls"
+  },
+  "630": {
+    "fullName": "Nodular or irregularly bedded limestone",
+    "shortName": "nod or irr Bd Ls"
+  },
+  "631": {
+    "fullName": "Limestone, irregular (burrow?) fillings of saccharoidal dolomite",
+    "shortName": "Ls, irr (Bur?) fillings of sacc Dol"
+  },
+  "632": {
+    "fullName": "Crossbedded limestone",
+    "shortName": "x-bd Ls"
+  },
+  "633": {
+    "fullName": "Cherty crossbedded limestone",
+    "shortName": "cht x-bd Ls"
+  },
+  "634": {
+    "fullName": "Cherty and sandy crossbedded clastic limestone",
+    "shortName": "cht and sdy x-bd clas Ls"
+  },
+  "635": {
+    "fullName": "Oolitic limestone",
+    "shortName": "ooc Ls"
+  },
+  "636": {
+    "fullName": "Sandy limestone",
+    "shortName": "sdy Ls"
+  },
+  "637": {
+    "fullName": "Silty limestone",
+    "shortName": "slty Ls"
+  },
+  "638": {
+    "fullName": "Argillaceous or shaly limestone",
+    "shortName": "arg or sh Ls"
+  },
+  "639": {
+    "fullName": "Cherty limestone (1st option)",
+    "shortName": "cht Ls (1)"
+  },
+  "640": {
+    "fullName": "Cherty limestone (2nd option)",
+    "shortName": "cht Ls (2)"
+  },
+  "641": {
+    "fullName": "Dolomitic limestone,limy dolostone, or limy dolomite",
+    "shortName": "dol Ls or lmy Dol"
+  },
+  "642": {
+    "fullName": "Dolostone or dolomite",
+    "shortName": "Dolst or Dol"
+  },
+  "643": {
+    "fullName": "Crossbedded dolostone or dolomite",
+    "shortName": "x-bd Dolst or Dol"
+  },
+  "644": {
+    "fullName": "Oolitic dolostone or dolomite",
+    "shortName": "ooc Dolst or Dol"
+  },
+  "645": {
+    "fullName": "Sandy dolostone or dolomite",
+    "shortName": "sdy Dolst or Dol"
+  },
+  "646": {
+    "fullName": "Silty dolostone or dolomite",
+    "shortName": "slty Dolst or Dol"
+  },
+  "647": {
+    "fullName": "Argillaceous or shaly dolostone or dolomite",
+    "shortName": "arg or sh Dolst or Dol"
+  },
+  "648": {
+    "fullName": "Cherty dolostone or dolomite",
+    "shortName": "cht Dolst or Dol"
+  },
+  "649": {
+    "fullName": "Bedded chert (1st option)",
+    "shortName": "Bd Cht (1)"
+  },
+  "650": {
+    "fullName": "Bedded chert (2nd option)",
+    "shortName": "Bd Cht (2)"
+  },
+  "651": {
+    "fullName": "Fossiliferous bedded chert",
+    "shortName": "foss Bd Cht"
+  },
+  "652": {
+    "fullName": "Fossiliferous rock",
+    "shortName": "foss Rk"
+  },
+  "653": {
+    "fullName": "Diatomaceous rock",
+    "shortName": "Diatomaceous Rk"
+  },
+  "654": {
+    "fullName": "Subgraywacke",
+    "shortName": "Sbgwke"
+  },
+  "655": {
+    "fullName": "Crossbedded subgraywacke",
+    "shortName": "x-bd Sbgwke"
+  },
+  "656": {
+    "fullName": "Ripple-bedded subgraywacke",
+    "shortName": "Rpl-Bd Sbgwke"
+  },
+  "657": {
+    "fullName": "Peat",
+    "shortName": "Peat"
+  },
+  "658": {
+    "fullName": "Coal",
+    "shortName": "C"
+  },
+  "659": {
+    "fullName": "Bony coal or impure coal",
+    "shortName": "Bony C or impure C"
+  },
+  "660": {
+    "fullName": "Underclay",
+    "shortName": "Uc"
+  },
+  "661": {
+    "fullName": "Flint clay",
+    "shortName": "Flint Cl"
+  },
+  "662": {
+    "fullName": "Bentonite",
+    "shortName": "Bent"
+  },
+  "663": {
+    "fullName": "Glauconite",
+    "shortName": "Blauc"
+  },
+  "664": {
+    "fullName": "Limonite",
+    "shortName": "Lim"
+  },
+  "665": {
+    "fullName": "Siderite",
+    "shortName": "Sid."
+  },
+  "666": {
+    "fullName": "Phosphatic-nodular rock",
+    "shortName": "phos-nod Rk"
+  },
+  "667": {
+    "fullName": "Gypsum",
+    "shortName": "Gyp"
+  },
+  "668": {
+    "fullName": "Salt",
+    "shortName": "Sa"
+  },
+  "669": {
+    "fullName": "Interbedded sandstone and siltstone",
+    "shortName": "intbd Sst and Sltst"
+  },
+  "670": {
+    "fullName": "Interbedded sandstone and shale",
+    "shortName": "intbd Sst and Sh"
+  },
+  "671": {
+    "fullName": "Interbedded ripplebedded sandstone and shale",
+    "shortName": "intbd RplBd Sst and Sh"
+  },
+  "672": {
+    "fullName": "Interbedded shale and silty limestone (shale dominant)",
+    "shortName": "intbd Sh and slty Ls (Sh dom)"
+  },
+  "673": {
+    "fullName": "Interbedded shale and limestone (shale dominant) (1st option)",
+    "shortName": "intbd Sh and Ls (Sh dom) (1)"
+  },
+  "674": {
+    "fullName": "Interbedded shale and limestone (shale dominant) (2nd option)",
+    "shortName": "intbd Sh and Ls (Sh dom) (2)"
+  },
+  "675": {
+    "fullName": "Interbedded calcareous shale and limestone (shale dominant)",
+    "shortName": "intbd calc Sh and Ls (Sh dom)"
+  },
+  "676": {
+    "fullName": "Interbedded silty limestone and shale",
+    "shortName": "intbd slty Ls and Sh"
+  },
+  "677": {
+    "fullName": "Interbeddedlimestone and shale (1st option)",
+    "shortName": "intbd Ls and Sh (1)"
+  },
+  "678": {
+    "fullName": "Interbedded limestone and shale (2nd option)",
+    "shortName": "intbd Ls and Sh (2)"
+  },
+  "679": {
+    "fullName": "Interbedded limestone and shale (limestone dominant)",
+    "shortName": "intbd Ls and Sh (Ls dom)"
+  },
+  "680": {
+    "fullName": "Interbedded limestone and calcareous shale",
+    "shortName": "intbd Ls and calc Sh"
+  },
+  "681": {
+    "fullName": "Till or diamicton (1st option)",
+    "shortName": "Till or diamicton (1)"
+  },
+  "682": {
+    "fullName": "Till or diamicton (2nd option)",
+    "shortName": "Till or diamicton (2)"
+  },
+  "683": {
+    "fullName": "Till or diamicton (3rd option)",
+    "shortName": "Till or diamicton (3)"
+  },
+  "684": {
+    "fullName": "Loess (1st option)",
+    "shortName": "Loess (1)"
+  },
+  "685": {
+    "fullName": "Loess (2nd option)",
+    "shortName": "Loess (2)"
+  },
+  "686": {
+    "fullName": "Loess (3rd option)",
+    "shortName": "Loess (3)"
+  },
+  "701": {
+    "fullName": "Metamorphism",
+    "shortName": "Meta"
+  },
+  "702": {
+    "fullName": "Quartzite",
+    "shortName": "Qtzt."
+  },
+  "703": {
+    "fullName": "Slate",
+    "shortName": "Sl."
+  },
+  "704": {
+    "fullName": "Schistose or gneissoid granite",
+    "shortName": "sch or gns Grt"
+  },
+  "705": {
+    "fullName": "Schist",
+    "shortName": "Sch."
+  },
+  "706": {
+    "fullName": "Contorted schist",
+    "shortName": "cntrt Sch."
+  },
+  "707": {
+    "fullName": "Schist and gneiss",
+    "shortName": "Sch. and Gns"
+  },
+  "708": {
+    "fullName": "Gneiss",
+    "shortName": "Gns"
+  },
+  "709": {
+    "fullName": "Contorted gneiss",
+    "shortName": "cntrt Gns"
+  },
+  "710": {
+    "fullName": "Soapstone, talc, or serpentinite",
+    "shortName": "Soapstone, talc, or serpentinite"
+  },
+  "711": {
+    "fullName": "Tuffaceous rock",
+    "shortName": "tf Rk"
+  },
+  "712": {
+    "fullName": "Crystal tuff",
+    "shortName": "Xl Tf"
+  },
+  "713": {
+    "fullName": "Devitrified tuff",
+    "shortName": "devit Tf"
+  },
+  "714": {
+    "fullName": "Volcanic breccia and tuff",
+    "shortName": "volc Brec and Tf"
+  },
+  "715": {
+    "fullName": "Volcanic breccia or agglomerate",
+    "shortName": "volc Brec or Aglm"
+  },
+  "716": {
+    "fullName": "Zeolitic rock",
+    "shortName": "Zeolitic Rk"
+  },
+  "717": {
+    "fullName": "Basaltic flows",
+    "shortName": "bas flows"
+  },
+  "718": {
+    "fullName": "Granite (1st option)",
+    "shortName": "Grt (1)"
+  },
+  "719": {
+    "fullName": "Granite (2nd option)",
+    "shortName": "Grt (2)"
+  },
+  "720": {
+    "fullName": "Banded igneous rock",
+    "shortName": "bnd Ig"
+  },
+  "721": {
+    "fullName": "Igneous rock (1st option)",
+    "shortName": "Ig (1)"
+  },
+  "722": {
+    "fullName": "Igneous rock (2nd option)",
+    "shortName": "Ig (2)"
+  },
+  "723": {
+    "fullName": "Igneous rock (3rd option)",
+    "shortName": "Ig (3)"
+  },
+  "724": {
+    "fullName": "Igneous rock (4th option)",
+    "shortName": "Ig (4)"
+  },
+  "725": {
+    "fullName": "Igneous rock (5th option)",
+    "shortName": "Ig (5)"
+  },
+  "726": {
+    "fullName": "Igneous rock (6th option)",
+    "shortName": "Ig (6)"
+  },
+  "727": {
+    "fullName": "Igneous rock (7th option)",
+    "shortName": "Ig (7)"
+  },
+  "728": {
+    "fullName": "Igneous rock (8th option)",
+    "shortName": "Ig (8)"
+  },
+  "729": {
+    "fullName": "Porphyritic rock (1st option)",
+    "shortName": "Porphyritic Rk (1)"
+  },
+  "730": {
+    "fullName": "Porphyritic rock (2nd option)",
+    "shortName": "Porphyritic Rk (2)"
+  },
+  "731": {
+    "fullName": "Vitrophyre",
+    "shortName": "Vit"
+  },
+  "732": {
+    "fullName": "Quartz",
+    "shortName": "Qtz."
+  },
+  "733": {
+    "fullName": "Ore",
+    "shortName": "Ore"
+  }
+}
