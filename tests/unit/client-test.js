@@ -12,6 +12,10 @@ var server = require(root + '/lib/server.js');
 var BankAccount = require(root + '/lib/bank-account.js');
 
 var socketURL = config.url + ':' + config.port;
+var options = {
+  transports: ['websocket'],
+  'force new connection': true
+};
 
 var bankAccount = new BankAccount();
 var teamData = { 
@@ -22,21 +26,55 @@ var teamData = {
   'drillRequests': []
 };
 
+before(function() {
+  server.listen();
+});
+
 describe('Client Connection', function() {
-  before(function() {
-    server.listen();
-  });
-
   it('should receive the \'team joined\' event after sending \'new team\'', function(done) {
-    var team1 = io.connect(socketURL);
+    var team = io.connect(socketURL, options);
 
-    team1.on('connect', function(data) {
-      team1.emit('new team', teamData);
+    team.on('connect', function(data) {
+      team.emit('new team', teamData);
     });
 
-    team1.on('team joined', function(teamName) {
+    team.on('team joined', function(teamName) {
       assert.equal(teamName, teamData.name);
+      team.disconnect();
       done();
     });
   });
+});
+
+describe('Director connection', function() {
+  it('should connect a director to the server', function(done) {
+    var director = io.connect(socketURL, options);
+    director.on('connect', function(data) {
+      director.disconnect();
+      done();
+    });
+  });
+
+  it('can relay any arbitrary event to connected teams', function(done) {
+    var team = io.connect(socketURL, options);
+    var director = io.connect(socketURL, options);
+
+    team.on('connect', function(data) {
+      team.emit('new team', teamData);
+    });
+
+    team.on('foo event', function() {
+      team.disconnect();
+      done();
+    });
+
+    director.on('connect', function(data) {
+      director.emit('send game event', 'foo event');
+      director.disconnect();
+    });
+  });
+});
+
+after(function() {
+  server.shutdown();
 });
