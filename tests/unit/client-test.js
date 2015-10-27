@@ -4,14 +4,18 @@
  * interaction that I need to implement.
  */
 
-var root = '../..';
-var assert = require('assert');
-var io = require('socket.io-client');
-var config = require(root + '/config/config').config();
-var server = require(root + '/lib/server.js');
-var BankAccount = require(root + '/lib/bank-account.js');
+/*eslint max-nested-callbacks: 0*/
+
+var root = '../..',
+  assert = require('assert'),
+  io = require('socket.io-client'),
+  config = require(root + '/config/config').config(),
+  server = require(root + '/libs/server.js'),
+  BankAccount = require(root + '/models/bank-account.js');
 
 var socketURL = config.url + ':' + config.port;
+var request = require('supertest')(socketURL);
+
 var options = {
   transports: ['websocket'],
   'force new connection': true
@@ -30,47 +34,178 @@ before(function() {
   server.listen();
 });
 
-describe('Client Connection', function() {
-  it('should receive the \'team joined\' event after sending \'new team\'', function(done) {
-    var team = io.connect(socketURL, options);
+var team = {
+  name: 'Foo Team',
+  password: 'BarPass'
+};
 
-    team.on('connect', function(data) {
-      team.emit('new team', teamData);
+describe('Team endpoints', function() {
+  describe('/new-team', function() {
+    it('should create a new team on the server', function(done) {
+      request.post('/new-team')
+      .type('json')
+      .send(team)
+      .expect(201, done);
     });
 
-    team.on('team joined', function(teamName) {
-      assert.equal(teamName, teamData.name);
-      team.disconnect();
-      done();
+    it('can\'t create a team without a username', function(done) {
+      var badTeam = {
+        password: 'FooPass'
+      }
+      request.post('/new-team')
+      .type('json')
+      .send(badTeam)
+      .expect(400, done);
+    });
+
+    it('can\'t create a team without a password', function(done) {
+      var badTeam = {
+        name: 'FooName'
+      }
+      request.post('/new-team')
+      .type('json')
+      .send(badTeam)
+      .expect(400, done);
+    });
+  });
+
+  describe('/team-login', function() {
+    it('should log in the team that has been created', function(done) {
+      request.post('/team-login')
+      .type('json')
+      .send(team)
+      .expect(200)
+      .end(function(err, res) {
+        if(err) { return done(err); }
+        assert.ok(res.body.token);
+        done();
+      });
+    });
+
+    it('can\'t log on with an invalid name', function(done) {
+      var badTeam = {
+        name: 'Invalid Name',
+        password: 'BarPass'
+      };
+      request.post('/team-login')
+      .type('json')
+      .send(badTeam)
+      .expect(401, done)
+    });
+
+    it('can\'t log on with an invalid password', function(done) {
+      var badTeam = {
+        name: 'Foo Team',
+        password: 'bar'
+      };
+      request.post('/team-login')
+      .type('json')
+      .send(badTeam)
+      .expect(401, done)
+    });
+
+    it('can connect to the socket after logging in', function(done) {
+      request.post('/team-login')
+      .type('json')
+      .send(team)
+      .expect(200)
+      .end(function(err, res) {
+        if(err) { return done(err); }
+        options.query = 'token=' + res.body.token;
+
+        var goodTeam = io.connect(socketURL, options);
+        goodTeam.on('connect', function(data) {
+          done();
+        });
+      });
     });
   });
 });
 
-describe('Director connection', function() {
-  it('should connect a director to the server', function(done) {
-    var director = io.connect(socketURL, options);
-    director.on('connect', function(data) {
-      director.disconnect();
-      done();
+var director = {
+  name: 'FooDirector',
+  password: 'BarPassword'
+};
+
+describe('Director endpoints', function() {
+  describe('/new-director', function() {
+    it('should create a new director on the server', function(done) {
+      request.post('/new-director')
+      .type('json')
+      .send(director)
+      .expect(201, done)
+    });
+
+    it('can\'t create a director without a username', function(done) {
+      var badDir = {
+        password: 'FooPass'
+      };
+      request.post('/new-team')
+      .type('json')
+      .send(badDir)
+      .expect(400, done);
+    });
+
+    it('can\'t create a director without a password', function(done) {
+      var badDir = {
+        name: 'FooName'
+      };
+      request.post('/new-team')
+      .type('json')
+      .send(badDir)
+      .expect(400, done);
     });
   });
 
-  it('can relay any arbitrary event to connected teams', function(done) {
-    var team = io.connect(socketURL, options);
-    var director = io.connect(socketURL, options);
-
-    team.on('connect', function(data) {
-      team.emit('new team', teamData);
+  describe('/director-login', function() {
+    it('can log on after a director is created', function(done) {
+      request.post('/director-login')
+      .type('json')
+      .send(director)
+      .expect(200)
+      .end(function(err, res) {
+        if(err) { return done(err); }
+        assert.ok(res.body.token);
+        done();
+      });
     });
 
-    team.on('foo event', function() {
-      team.disconnect();
-      done();
+    it('can\'t log on with an invalid name', function(done) {
+      var dir = {
+        name: 'foo',
+        password: 'BarPassword'
+      };
+      request.post('/director-login')
+      .type('json')
+      .send(dir)
+      .expect(401, done)
     });
 
-    director.on('connect', function(data) {
-      director.emit('send game event', 'foo event');
-      director.disconnect();
+    it('can\'t log on with an invalid password', function(done) {
+      var dir = {
+        name: 'FooDirector',
+        password: 'bar'
+      };
+      request.post('/director-login')
+      .type('json')
+      .send(dir)
+      .expect(401, done)
+    });
+
+    it('can connect to the socket after logging in', function(done) {
+      request.post('/director-login')
+      .type('json')
+      .send(director)
+      .expect(200)
+      .end(function(err, res) {
+        if(err) { return done(err); }
+        options.query = 'token=' + res.body.token;
+
+        var dir = io.connect(socketURL, options);
+        dir.on('connect', function(data) {
+          done();
+        });
+      });
     });
   });
 });
