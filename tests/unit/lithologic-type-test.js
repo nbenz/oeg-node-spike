@@ -1,5 +1,6 @@
+var root = '../..';
 var assert = require('assert');
-var LithologicType = require('../../lib/lithologic-type');
+var LithologicType = require(root + '/models/lithologic-type');
 
 describe('lithologic-type', function() {
   it('should create an object with all the properties', function() {

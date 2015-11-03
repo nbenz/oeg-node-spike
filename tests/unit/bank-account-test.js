@@ -1,5 +1,6 @@
+var root = '../..';
 var assert = require('assert');
-var BankAccount = require('../../lib/bank-account');
+var BankAccount = require(root + '/models/bank-account');
 
 describe('BankAccount', function() {
   it('should create an object with all the properties', function() {
