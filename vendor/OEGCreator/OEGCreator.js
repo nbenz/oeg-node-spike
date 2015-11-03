@@ -523,7 +523,7 @@ for(k=0;k<maxSmoothing;k++) {
          }
        }
        document.getElementById("theMigrationCounter").innerHTML = kk;
-       if (kk > 10000) { oilMoves = false; } // stop at 10000 loops if still migrating
+       if (kk > domainSize*domainSize) { oilMoves = false; } // stop at 10000 loops if still migrating
      } 
     
      
@@ -592,22 +592,22 @@ for (k=0;k<numLayers;k++) {
 				break;
 			case 1:
 				theStrElement = document.getElementById("my1Values");
-				document.getElementById("my0Title").innerHTML = "Layer 2 Elevations";
+				document.getElementById("my1Title").innerHTML = "Layer 2 Elevations";
 				str = "";
 				break;
 			case 2:
 				theStrElement = document.getElementById("my2Values");
-				document.getElementById("my0Title").innerHTML = "Layer 3 Elevations";
+				document.getElementById("my2Title").innerHTML = "Layer 3 Elevations";
 				str = "";
 				break;
 			case 3:
 				theStrElement = document.getElementById("my3Values");
-				document.getElementById("my0Title").innerHTML = "Layer 4 Elevations";
+				document.getElementById("my3Title").innerHTML = "Layer 4 Elevations";
 				str = "";
 				break;
 			case 4:
 				theStrElement = document.getElementById("my4Values");
-				document.getElementById("my0Title").innerHTML = "Layer 5 Elevations";
+				document.getElementById("my4Title").innerHTML = "Layer 5 Elevations";
 				str = "";
 				break;
 		}
@@ -696,8 +696,8 @@ for (i=0;i<numLayers;i++) {
 
 	var minVal = 1000000;
 	var maxVal = -1000000;
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = elevs[x][y][i];
 	    if(cellVal != null) {
@@ -710,8 +710,8 @@ for (i=0;i<numLayers;i++) {
 	if(maxVal > everestElevation) everestElevation = maxVal;
 	if(i<=2 && minVal < deathValleyElevation) deathValleyElevation = minVal;
 
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = elevs[x][y][i];
 //		scale the value between min and max to 0-256
@@ -738,8 +738,8 @@ for (i=0;i<numLayers;i++) {
 		canvasWIDTH = theCanvas.width;
 		canvasHEIGHT = theCanvas.height;
 
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		cellElevation = -999
 	    cellVal0 = elevs[x][y][0];
 	    cellVal1 = elevs[x][y][1];
@@ -782,8 +782,8 @@ for (i=0;i<numLayers;i++) {
 
 	var minVal = 1000000;
 	var maxVal = -1000000;
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = oil[x][y] * 1;
 		if(cellVal < minVal) {minVal = cellVal}
@@ -791,8 +791,8 @@ for (i=0;i<numLayers;i++) {
 	}
 	}
 
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = oil[x][y] * 1;
 //		scale the value between min and max to 0-256
@@ -815,8 +815,8 @@ for (i=0;i<numLayers;i++) {
 
 	var minVal = 1000000;
 	var maxVal = -1000000;
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = gas[x][y] * 1;
 		if(cellVal < minVal) {minVal = cellVal}
@@ -824,8 +824,8 @@ for (i=0;i<numLayers;i++) {
 	}
 	}
 
-	for( x=0; x <100; ++x) {
-	for( y=0; y <100; ++y) {
+	for( x=0; x <domainSize; ++x) {
+	for( y=0; y <domainSize; ++y) {
 		 
 	    cellVal = gas[x][y] * 1;
 //		scale the value between min and max to 0-256
@@ -842,7 +842,8 @@ for (i=0;i<numLayers;i++) {
 	}
        
        
-    return true;
+    //return true;
+	return {elevs, oil, gas};
 }
 
     //Draws circles with a 5 pixel diameter at the position specified.

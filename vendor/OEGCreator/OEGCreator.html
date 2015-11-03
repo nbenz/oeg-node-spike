@@ -8,22 +8,32 @@
 				border:black solid 1px;
 				padding: 5px;
 			}
+			#advanced {
+				display: none;
+			}
 		</style>
 		<script src="OEGcreator.js"> </script>
+		<script src="JSONsaver2.js"> </script>
+		<script src="domHandler.js"> </script>
 		<script>
 //domainSize is the x and y array dimension (square) of the domain
 //myNumFields is the number of humps and bumps to create
 //mySlope is the general west to east elevation rise, per cell
 //myAntiElevation is the anticline height delta
+			var dummy;
 			function launchMe() {
 //				alert("staring launch");
-				var domainSize = 100;
+				var domainSize = Number(document.getElementById('gridSize').value);
 				var myNumFields = document.getElementById('numFields').value * 1;
 				var mySlope = document.getElementById('theSlope').value * 1;
 				var myAntiElevation = document.getElementById('theAnti').value * 1;
 				var faultDelta = document.getElementById('theOffset').value * 1;
 				dummy = createSim(domainSize, myNumFields, mySlope, myAntiElevation, faultDelta) ;
-}
+				document.getElementById("saver").disabled = false;
+			}
+			function saveMe(){
+				saveJSON(dummy.elevs, dummy.oil, dummy.gas, [608,618,622,608,622]);
+			}
 		</script>
 	</head>
 <body>
@@ -32,8 +42,23 @@
 		<label>Slope (per cell, increasing west to east): <input id="theSlope" type="text" size=30></label><br>
 		<label>Anticline Delta Elev: <input id="theAnti" type="text" size=30></label><br>
 		<label>Fault Offset: <input id="theOffset" type="text" size=30></label><br>
+		<span id="advanced">
+			<label>Seismic Setup: <input id="seismicSetup" type="text" size=30 value='30000'></label><br>
+			<label>Seismic Linear: <input id="seismicLinear" type="text" size=30 value='5000'></label><br>
+			<label>Start Cash: <input id="startCash" type="text" size=30 value='2500000'></label><br>
+			<label>Drill Cost: <input id="drillCost" type="text" size=30 value='400000'></label><br>
+			<label>Min. Lease Cost: <input id="minLeaseCost" type="text" size=30 value='5000'></label><br>
+			<label>Oil Income: $<input id="oilIncome" type="text" size=30 value='100'></label><br>
+			<label>Gas Income: $<input id="gasIncome" type="text" size=30 value='4'></label><br>
+			<label>Sim. Steps: <input id="simSteps" type="text" size=30 value='90'></label><br>
+			<label>Num. Steps: <input id="numSteps" type="text" size=30 value='20'></label><br>
+			<label>Step Time: <input id="stepTime" type="text" size=30 value='5'></label><br>
+			<label>Grid Size: <input id="gridSize" type="text" size=30 value='100'></label><br>
+		</span>
+		<a id="advancedLink" href="#" onclick="toggleAdvanced()">Advanced</a>
 	</form>	
 	<button onclick="launchMe()" type="button">Create Simulation!</button>
+	<button onclick="saveMe()" id = "saver" type="button" disabled = "true">Save Simulation!</button>
 	<hr>
 	<h4>Oil Migration Counter: <span id="theMigrationCounter"></span></h4>
 	<p>Layer 1 [0]: <span id="my0MaxMin"></span> -- Sandstone, non-oil bearing, thickens to the east</p>
