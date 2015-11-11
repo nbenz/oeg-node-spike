@@ -1,14 +1,11 @@
 var root = '..';
 var express = require('express'),
   app = express(),
-  http = require('http').Server(app),
+  server = require('http').Server(app),
   bodyParser = require('body-parser'),
-  io = require('socket.io')(http),
-  config = require(root + '/config/config').config(),
+  config = require(root + '/config/config')(),
   jwt = require('jsonwebtoken'),
-  socketioJwt = require('socketio-jwt'),
-  Team = require(root + '/models/team'),
-  Director = require(root + '/models/director');
+  UserManager = require('./user-manager');
 
 app.use(bodyParser.json());
 
@@ -20,66 +17,61 @@ app.get('/director', function(req, res) {
   res.sendFile(__dirname + '/director.html');
 });
 
-var jwtSecret = 'OEG-game-so-fun';
-var director;
-var teams = [];
-
 app.post('/new-director', function(req, res) {
   var status = 201;
-  var director = getDirector();
-  if(director) {
+
+  if(UserManager.getDirector()) {
     status = 409;
   } else if(!req.body.name || !req.body.password) {
     status = 400;
   } else {
-    setDirector(new Director(req.body.name, req.body.password));
+    UserManager.createDirector(req.body.name, req.body.password);
   }
 
   var token;
   if(status < 400) {
-    token = jwt.sign(getDirector(), jwtSecret);
+    token = jwt.sign(UserManager.getDirector(), config.jwtSecret);
   }
   res.status(status).send({ token: token });
 });
 
 app.post('/director-login', function(req, res) {
-  var director = getDirector();
+  var director = UserManager.getDirector();
   var status = 200;
 
-  if(!director || !directorAuthenticated(req.body.name, req.body.password)) {
+  if(!director || !UserManager.directorAuthenticated(req.body.name, req.body.password)) {
     status = 401;
   }
 
   var token;
   if(status < 400) {
-    token = jwt.sign(director, jwtSecret);
+    token = jwt.sign(director, config.jwtSecret);
   }
 
   res.status(status).send({ token: token });
 });
 
 app.post('/new-team', function(req, res) {
-  var team = getTeam(req.body.name);
   var status = 201;
 
-  if(team) { status = 409; }
-  else if(!req.body.name || !req.body.password) {
+  if(UserManager.getTeam(req.body.name)) { 
+    status = 409; 
+  } else if(!req.body.name || !req.body.password) {
     status = 400;
   } else {
-    team = new Team(req.body.name, req.body.password);
-    teams.push(team);
+    UserManager.addTeam(req.body.name, req.body.password);
   }
 
   var token;
   if(status < 400) {
-    token = jwt.sign(team, jwtSecret);
+    token = jwt.sign(UserManager.getTeam(req.body.name), config.jwtSecret);
   }
 
   res.status(status).send({ token: token });
 });
 
 app.post('/team-login', function(req, res) {
-  var team = getTeam(req.body.name);
+  var team = UserManager.getTeam(req.body.name);
   var status = 200;
   if(!team || team.password !== req.body.password) { 
     status = 401; 
@@ -87,79 +79,10 @@ app.post('/team-login', function(req, res) {
 
   var token;
   if(status < 400) {
-    token = jwt.sign(team, jwtSecret);
+    token = jwt.sign(team, config.jwtSecret);
   }
 
   res.status(status).send({ token: token });
 });
 
-io.use(socketioJwt.authorize({
-  secret: jwtSecret,
-  handshake: true
-}));
-
-io.on('connection', function(socket) {
-  if(socket.decoded_token.role === 'team') {
-    var team = getTeam(socket.decoded_token.name);
-    team.id = socket.id;
-	
-    socket.on('new bid', function(bid) {
-      bid.teamName = team.name;
-      team.bids.push(bid);
-    });
-
-    socket.on('drill request', function(drill) {
-      drill.teamName = team.name;
-      team.drillRequests.push(drill);
-
-      /* Return the cost of the drill to the client. Something like:
-         socket.emit('drill cost', getDrillCost(drill)); */
-    });
-
-    socket.on('seismic request', function(seismicRequest) {
-      seismicRequest.teamName = team.name;
-      team.bids.push(seismicRequest);
-
-      /* Return the cost of the seismic request to the client. Something like:
-         socket.emit('seismic request cost', getSeismicCost(seismicRequest) */
-    });
-  }
-
-  if(socket.decoded_token.role === 'director') {
-    getDirector().id = socket.id;
-  }
-});
-
-function setDirector(dir) {
-  director = dir;
-}
-
-function getDirector() { 
-  return director; 
-}
-
-function directorAuthenticated(name, password) {
-  var director = getDirector();
-  return director.name === name &&
-    director.password === password;
-};
-
-
-function getTeam(teamName) {
-  for(var i=0; i<teams.length; i++) {
-    if(teams[i].name === teamName) {
-      return teams[i];
-    }
-  }
-};
-
-module.exports.listen = function(port) {
-  http.listen(config.port, function() {
-    console.log('Starting server in ' + config.env + ' on ' + config.url + ':' + config.port);
-  });
-};
-
-module.exports.shutdown = function() {
-  console.log('Stopping server in ' + config.env + ' on ' + config.url + ':' + config.port);
-  http.close();
-};
+module.exports = server;

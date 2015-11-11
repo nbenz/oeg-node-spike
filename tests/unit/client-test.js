@@ -9,8 +9,9 @@
 var root = '../..',
   assert = require('assert'),
   io = require('socket.io-client'),
-  config = require(root + '/config/config').config(),
-  server = require(root + '/libs/server.js'),
+  config = require(root + '/config/config')(),
+  server = require(root + '/libs/server'),
+  socket = require(root + '/libs/socket').listen(server),
   BankAccount = require(root + '/models/bank-account.js');
 
 var socketURL = config.url + ':' + config.port;
@@ -31,7 +32,9 @@ var teamData = {
 };
 
 before(function() {
-  server.listen();
+  server.listen(config.port, function() {
+    console.log('Starting server in ' + config.env + ' on ' + config.url + ':' + config.port);
+  });
 });
 
 var team = {
@@ -211,5 +214,6 @@ describe('Director endpoints', function() {
 });
 
 after(function() {
-  server.shutdown();
+  console.log('Stopping server on ' + config.env + ' on ' + config.url + ':' + config.port);
+  server.close();
 });
