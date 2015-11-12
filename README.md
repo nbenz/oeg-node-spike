@@ -16,14 +16,20 @@ npm install && npm test
 ```
 
 #### Run
-`node index.js`
+`npm start`
+
+This will start the server in development on a random user port. To specify a port or environment, use the -p and -e flags   
+
+`npm start -- -p <port> -e <environment>`
+
 
 Testing
 -------
 
 #### Running Tests
 `npm test`
-This will run the syntax checker and Mocha tests with grunt
+This will run the syntax checker and Mocha tests with grunt.  
+See "Run" about starting the test server on a specific port.  
 
 #### Writing Tests
 This project is tested using [Mocha](http://mochajs.org) and npm's [assert](http://www.npmjs.com/package/assert) module.
