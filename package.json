@@ -4,7 +4,8 @@
   "description": "An implemenation of OEG in Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV='test' grunt"
+    "start": "scripts/deploy.sh",
+    "test": "scripts/deploy.sh -e test"
   },
   "repository": {
     "type": "git",
