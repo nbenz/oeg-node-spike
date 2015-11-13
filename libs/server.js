@@ -100,7 +100,29 @@ io.use(socketioJwt.authorize({
 
 io.on('connection', function(socket) {
   if(socket.decoded_token.role === 'team') {
-    getTeam(socket.decoded_token.name).id = socket.id;
+    var team = getTeam(socket.decoded_token.name);
+    team.id = socket.id;
+	
+    socket.on('new bid', function(bid) {
+      bid.teamName = team.name;
+      team.bids.push(bid);
+    });
+
+    socket.on('drill request', function(drill) {
+      drill.teamName = team.name;
+      team.drillRequests.push(drill);
+
+      /* Return the cost of the drill to the client. Something like:
+         socket.emit('drill cost', getDrillCost(drill)); */
+    });
+
+    socket.on('seismic request', function(seismicRequest) {
+      seismicRequest.teamName = team.name;
+      team.bids.push(seismicRequest);
+
+      /* Return the cost of the seismic request to the client. Something like:
+         socket.emit('seismic request cost', getSeismicCost(seismicRequest) */
+    });
   }
 
   if(socket.decoded_token.role === 'director') {
