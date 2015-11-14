@@ -19,19 +19,22 @@ module.exports.listen = function(app) {
       var team = UserManager.getTeam(socket.decoded_token.name);
       team.id = socket.id;
 
-      socket.on('new bid', function(bid) {
+      socket.on('new bid', function(bid, fn) {
         bid.teamName = team.name;
         team.bids.push(bid);
+        fn(200);
       });
 
-      socket.on('drill request', function(drill) {
+      socket.on('new drill request', function(drill, fn) {
         drill.teamName = team.name;
         team.drillRequests.push(drill);
+        fn(200);
       });
 
-      socket.on('seismic request', function(seismicRequest) {
+      socket.on('new seismic request', function(seismicRequest, fn) {
         seismicRequest.teamName = team.name;
-        team.bids.push(seismicRequest);
+        team.seismicRequests.push(seismicRequest);
+        fn(200);
       });
     }
 
