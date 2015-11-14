@@ -4,6 +4,8 @@ var socketio = require('socket.io'),
   UserManager = require('./user-manager'),
   config = require(root + '/config/config')();
 
+var io;
+
 module.exports.listen = function(app) {
   io = socketio.listen(app);
 
@@ -35,6 +37,23 @@ module.exports.listen = function(app) {
 
     if(socket.decoded_token.role === 'director') {
       UserManager.getDirector().id = socket.id;
+
+      socket.on('send event', function(payload) {
+        socket.broadcast.emit(payload.event, payload.data);
+      });
     }
   });
+}
+
+module.exports.purgeData = function() {
+  io.sockets.sockets.forEach(function(s) {
+    s.disconnect(true);
+  });
+
+  UserManager.removeDirector();
+  UserManager.removeTeams();
+}
+
+module.exports.exit = function() {
+  io.close();
 }
