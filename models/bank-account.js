@@ -6,10 +6,10 @@ function BankAccount() {
   this.updateUnusableFunds = function(funds) {
     this.unusableFunds += funds;
   };
-  this.updateIncome = function(income) {
+  this.addIncome = function(income) {
     this.income += income;
   };
-  this.updateBalance = function(amount) {
+  this.addBalance = function(amount) {
     this.balance += amount;
   };
   this.usableBalance = function() {

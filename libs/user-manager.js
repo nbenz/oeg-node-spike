@@ -37,6 +37,10 @@ function removeTeams() {
   teams.length = 0;
 }
 
+function getTeams() {
+  return teams;
+};
+
 module.exports.createDirector = createDirector;
 module.exports.getDirector = getDirector;
 module.exports.directorAuthenticated = directorAuthenticated;
@@ -44,3 +48,4 @@ module.exports.addTeam = addTeam;
 module.exports.getTeam = getTeam;
 module.exports.removeDirector = removeDirector;
 module.exports.removeTeams = removeTeams;
+module.exports.getTeams = getTeams;

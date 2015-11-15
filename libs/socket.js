@@ -2,6 +2,7 @@ var root = '..';
 var socketio = require('socket.io'),
   socketioJwt = require('socketio-jwt'),
   UserManager = require('./user-manager'),
+  GameManager = require('./game-manager'),
   config = require(root + '/config/config')();
 
 var io;
@@ -43,6 +44,11 @@ module.exports.listen = function(app) {
 
       socket.on('send event', function(payload) {
         socket.broadcast.emit(payload.event, payload.data);
+      });
+
+      socket.on('end round', function() {
+        GameManager.processBids(UserManager.getTeams());
+        GameManager.processDrillRequests(UserManager.getTeams());
       });
     }
   });
