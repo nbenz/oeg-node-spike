@@ -12,7 +12,7 @@ function compareBids(b1, b2) {
 
 function auction(teams) {
     var results = {};
-	for (var i = 0; i < teams.length; i++) {
+    for (var i = 0; i < teams.length; i++) {
         for(var b of teams[i].bids) {
             var prev = results[b.landPoint];
             if (typeof prev === 'undefined' || compareBids(b, prev.bid) < 0) {
@@ -20,10 +20,10 @@ function auction(teams) {
             }
         }
     }
-	var values = [];
+    var values = [];
     for (var k in results) {
-		values.push(results[k]);
-	}
+        values.push(results[k]);
+    }
     return values;
 }
 
