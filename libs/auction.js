@@ -15,8 +15,8 @@ function auction(teams) {
     for (var i = 0; i < teams.length; i++) {
         for(var b of teams[i].bids) {
             var prev = results[b.landPoint];
-            if (typeof prev === 'undefined' || compareBids(b, prev.bid) < 0) {
-                results[b.landPoint] = { bid: b, team: i };
+            if (typeof prev === 'undefined' || compareBids(b, prev) < 0) {
+                results[b.landPoint] = b;
             }
         }
     }
