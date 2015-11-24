@@ -8,7 +8,7 @@ function loadInitialSimulation(){
   //load inital map (from saved JSON? we hope...)
   //randomly generate some fudge values & store it
   //for each user: change the value of their mask to be an empty 2d of the correct size
-  initializeFudge();
+  initializeElevationErrors();
 }
 
 function initializeElevationErrors(){
