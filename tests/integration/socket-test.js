@@ -9,7 +9,7 @@ var root = '../..',
   Action = require(root + '/models/action'),
   Point = require(root + '/models/point');
 
-var socketURL = config.url + ':' + config.port;
+var socketURL = 'http://' + config.url + ':' + config.port;
 var request = require('supertest')(socketURL);
 
 var options = {
