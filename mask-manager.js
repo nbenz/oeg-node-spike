@@ -38,10 +38,18 @@ function getCellInfo(p){
   if (mask[p.x][p.y].drilled){//later, we will have this check to see if drilled is > or < a certain value
                               //and return partial absolute truth (to a certain depth)
   //return absolute truth 
+	return getAllCellInfo(p);
   }else if (mask[p.x][p.y].layerError){
+    var realElevs = getOnlyElevation(p); 
+	var skewedElevs = [];
+	for (var i = 0; i < mask[p.x][p.y].layerError.length; i++){
+	  skewedElevs.push(realElevs[i] + mask[p.x][p.y].layerError[i]);
+	}
+	return skewedElevs;
   //return skewed elevations
   } else {
   //return basic surface level info
+    return getAllCellInfo(p)[0]; //return only the top layer
   }
 }
 
