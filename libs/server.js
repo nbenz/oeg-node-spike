@@ -15,7 +15,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/director', function(req, res) {
-  if(req.query.token && jwt.verify(req.query.token, jwtSecret) ) {
+  if(req.query.token && jwt.verify(req.query.token, config.jwtSecret) ) {
     res.sendFile(__dirname + '/public/director-dashboard.html');
   } else {
     res.sendFile(__dirname + '/public/director.html');

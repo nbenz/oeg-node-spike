@@ -10,54 +10,74 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel='stylesheet' type='text/css' href='normalize.css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'> 
+    <link rel='stylesheet' type='text/css' href='global.css'>  
 </head>
 <body>
 	<style>
-	*,div{box-sizing: border-box;}
-  body{font-family:'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #eeeeee; padding: 0 0 0 0; margin: 0 0 0 0;}
-	p{line-height: 1em; margin-top:8px; margin-bottom: 8px; font-size: 13px;}
-  p.center{text-align: center;}
-  #director-main{margin-top: 6%; }
-  .wrapper,footer{width: 500px; max-width: 100%; margin: auto;}
-  .wrapper{ padding: 20px 28px 30px; border: 1px solid #cccccc; height: 316px;  background: #ffffff;}
-	form#director{}
-	input[type="text"],input[type="password"]{width: 100%;padding: 8px; margin: 4px auto; font-size: 12px; border: 1px solid #cccccc;}
-  .button{padding: 14px 4px; background: #353535; text-transform: uppercase;  margin: 16px 0; min-width: 160px;  border: 0px; border-radius: 100px; -moz-border-radius: 100px; -webkit-border-radius: 100px; transition: all 150ms ease; -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; cursor: pointer; letter-spacing: 1px; color: #ffffff }
-  .button:hover{background: #000000;}
-  .disabled{ background: #c7c7c7; color: #4c4c4c;}
   footer{padding: 20px 0px; position: relative;}
   </style>
 	<div class="wrapper" id="director-main">
-	<h2>Create New OEG Director</h2>
-	<form id="director" name="director_new">
-	<p>Director Name:</p>
-	<input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
-	<p>Director Pasword:</p>
-	<input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
-	<input type="submit" class="button" value="Submit">
-	</form>
+  <div class="form-toggle-wrap">
+    <ul class="form-toggle cf" id="director-form-toggle">
+      <li class="active" data-content="director-create-container"><a href="#">Create New Director</a></li>
+      <li data-content="director-login-container"><a href="#">Existing Director Login</a></li>
+    </ul>
+  </div>  
+  <div class="form-toggle-buffer"></div>
+  <div class="form-toggle-content-wrap">
+    <div id="director-create-container">
+      <h2>Create New OEG Director</h2>
+      <form id="director-create" name="director_new">
+	    <p>Director Name:</p>
+	    <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
+	    <p>Director Pasword:</p>
+	    <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+      <input type="submit" class="button" value="Submit">
+	    </form>
+    </div>
+    <div id="director-login-container" style="display: none;">
+      <h2>Login as Existing Director</h2>
+      <form id="director-login">
+	    <p>Director Name:</p>
+	    <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
+	    <p>Director Pasword:</p>
+	    <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+      <input type="submit" class="button" value="Submit">
+      </form>
+    </div>
+  </div>
 </div>
 <footer>
   <p class="center">&copy 2015 Oil Exploration Game by Olivet Nazarene University</p>
 </footer>
-	<script>
+<script src='interface.js'></script>  
+<script>
 	$(function() {
-    	$('form#director').submit(function (e) {
-    		e.preventDefault();
+    $('form').submit(function (e) {
+        formElem = '#' + $(this).attr('id');
+        e.preventDefault();
     		if( validate($(this)) ){
-    			var new_director = {
-    				name: $('form#director input[name="director_name"]').val(),
-    				password: $('form#director input[name="director_password"]').val()
+    			var director_info = {
+    				name: $(formElem + ' input[name="director_name"]').val(),
+    				password: $(formElem + ' input[name="director_password"]').val()
           };
-          $('form#director input[type="submit"]').addClass("disabled");
-				  $.ajax({
-					  url: '/new-director',
+          $(formElem + ' input[type="submit"]').addClass("disabled");
+          var endpoint;
+          if(formElem == '#director-create'){
+            endpoint = '/new-director';
+          }
+          else{
+            endpoint = '/director-login';
+          }
+          $.ajax({
+					  url: endpoint,
 					  type: 'POST',
 					  contentType: 'application/json',
-					  data: JSON.stringify(new_director)
+					  data: JSON.stringify(director_info)
 				  }).done(function( data ){
 					  if(data.token != null || data.token != ""){
               localStorage.setItem("token", data.token);
+              localStorage.setItem("director_name", director_info.name);
               var port = window.location.port || 80;
 						  window.location.assign('http://' + window.location.hostname + ':' + port + '/director?token=' + data.token);
 					  }
@@ -67,9 +87,11 @@
 		/* Accepts form element, validates all input */
 		function validate(form){
 			var validated = true;
-			form + $(":input").each(function(){
-	 				if($(this).prop("type") != "submit"){
-	 					if($(this).val() == "" || $(this).val() == " " || $(this).val() == null){
+      console.log(form.attr('id'));
+      $('#'+form.attr('id')+" input").each(function(){
+        if($(this).prop("type") != "submit"){
+            console.log($(this));
+            if($(this).val() == "" || $(this).val() == " " || $(this).val() == null){
 	 						$(this).css("border", "2px solid red");
 	 						$(this).css("background-color", "rgba(255, 0, 0, 0.10)");
 	 						alert("ERROR: " + $(this).data("name") + " is a required field.");
