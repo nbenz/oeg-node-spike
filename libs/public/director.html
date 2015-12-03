@@ -1,111 +1,111 @@
 <!doctype html>
 <html lang="en-US">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Director</title>
+    <title>Director Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--[if lt IE 9]>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel='stylesheet' type='text/css' href='normalize.css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300' rel='stylesheet' type='text/css'> 
-    <link rel='stylesheet' type='text/css' href='global.css'>  
-</head>
-<body>
-	<style>
-  footer{padding: 20px 0px; position: relative;}
-  </style>
-	<div class="wrapper" id="director-main">
-  <div class="form-toggle-wrap">
-    <ul class="form-toggle cf" id="director-form-toggle">
-      <li class="active" data-content="director-create-container"><a href="#">Create New Director</a></li>
-      <li data-content="director-login-container"><a href="#">Existing Director Login</a></li>
-    </ul>
-  </div>  
-  <div class="form-toggle-buffer"></div>
-  <div class="form-toggle-content-wrap">
-    <div id="director-create-container">
-      <h2>Create New OEG Director</h2>
-      <form id="director-create" name="director_new">
-	    <p>Director Name:</p>
-	    <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
-	    <p>Director Pasword:</p>
-	    <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
-      <input type="submit" class="button" value="Submit">
-	    </form>
+    <link rel='stylesheet' type='text/css' href='global.css'>
+  </head>
+  <body>
+    <style>
+      footer{padding: 20px 0px; position: relative;}
+    </style>
+    <div class="wrapper" id="director-main">
+      <div class="form-toggle-wrap">
+        <ul class="form-toggle cf" id="director-form-toggle">
+          <li class="active" data-content="director-create-container"><a href="#">Create New Director</a></li>
+          <li data-content="director-login-container"><a href="#">Existing Director Login</a></li>
+        </ul>
+      </div>
+      <div class="form-toggle-buffer"></div>
+      <div class="form-toggle-content-wrap">
+        <div id="director-create-container">
+          <h2>Create New OEG Director</h2>
+          <form id="director-create" name="director_new">
+            <p>Director Name:</p>
+            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
+            <p>Director Pasword:</p>
+            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+            <input type="submit" class="button" value="Submit">
+          </form>
+        </div>
+        <div id="director-login-container" style="display: none;">
+          <h2>Login as Existing Director</h2>
+          <form id="director-login">
+            <p>Director Name:</p>
+            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
+            <p>Director Pasword:</p>
+            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+            <input type="submit" class="button" value="Submit">
+          </form>
+        </div>
+      </div>
     </div>
-    <div id="director-login-container" style="display: none;">
-      <h2>Login as Existing Director</h2>
-      <form id="director-login">
-	    <p>Director Name:</p>
-	    <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
-	    <p>Director Pasword:</p>
-	    <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
-      <input type="submit" class="button" value="Submit">
-      </form>
-    </div>
-  </div>
-</div>
-<footer>
-  <p class="center">&copy 2015 Oil Exploration Game by Olivet Nazarene University</p>
-</footer>
-<script src='interface.js'></script>  
-<script>
-	$(function() {
-    $('form').submit(function (e) {
-        formElem = '#' + $(this).attr('id');
-        e.preventDefault();
-    		if( validate($(this)) ){
-    			var director_info = {
-    				name: $(formElem + ' input[name="director_name"]').val(),
-    				password: $(formElem + ' input[name="director_password"]').val()
-          };
-          $(formElem + ' input[type="submit"]').addClass("disabled");
-          var endpoint;
-          if(formElem == '#director-create'){
-            endpoint = '/new-director';
+    <footer>
+      <p class="center">&copy 2015 Oil Exploration Game by Olivet Nazarene University</p>
+    </footer>
+    <script src='interface.js'></script>
+    <script>
+      $(function() {
+        $('form').submit(function (e) {
+          formElem = '#' + $(this).attr('id');
+          e.preventDefault();
+          if( validate($(this)) ){
+            var director_info = {
+              name: $(formElem + ' input[name="director_name"]').val(),
+              password: $(formElem + ' input[name="director_password"]').val()
+            };
+            $(formElem + ' input[type="submit"]').addClass("disabled");
+            var endpoint;
+            if(formElem == '#director-create'){
+              endpoint = '/new-director';
+            }
+            else{
+              endpoint = '/director-login';
+            }
+            $.ajax({
+              url: endpoint,
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify(director_info)
+            }).done(function( data ){
+              if(data.token != null || data.token != ""){
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("director_name", director_info.name);
+                var port = window.location.port || 80;
+                window.location.assign('http://' + window.location.hostname + ':' + port + '/director?token=' + data.token);
+              }
+            });
           }
-          else{
-            endpoint = '/director-login';
-          }
-          $.ajax({
-					  url: endpoint,
-					  type: 'POST',
-					  contentType: 'application/json',
-					  data: JSON.stringify(director_info)
-				  }).done(function( data ){
-					  if(data.token != null || data.token != ""){
-              localStorage.setItem("token", data.token);
-              localStorage.setItem("director_name", director_info.name);
-              var port = window.location.port || 80;
-						  window.location.assign('http://' + window.location.hostname + ':' + port + '/director?token=' + data.token);
-					  }
-				  });
-    		}
-    	});
-		/* Accepts form element, validates all input */
-		function validate(form){
-			var validated = true;
-      console.log(form.attr('id'));
-      $('#'+form.attr('id')+" input").each(function(){
-        if($(this).prop("type") != "submit"){
-            console.log($(this));
-            if($(this).val() == "" || $(this).val() == " " || $(this).val() == null){
-	 						$(this).css("border", "2px solid red");
-	 						$(this).css("background-color", "rgba(255, 0, 0, 0.10)");
-	 						alert("ERROR: " + $(this).data("name") + " is a required field.");
-	 						validated = false;
-	 					}
-	 					else{
-	 						$(this).css("border", "1px solid #cccccc");
-	 						$(this).css("background-color", "transparent");
-	 					}
-	 				}
-			});
-			return validated;
-		}
-	});
-	</script>
-</body>
+        });
+        /* Accepts form element, validates all input */
+        function validate(form){
+          var validated = true;
+          console.log(form.attr('id'));
+          $('#'+form.attr('id')+" input").each(function(){
+            if($(this).prop("type") != "submit"){
+              console.log($(this));
+              if($(this).val() == "" || $(this).val() == " " || $(this).val() == null){
+                $(this).css("border", "2px solid red");
+                $(this).css("background-color", "rgba(255, 0, 0, 0.10)");
+                alert("ERROR: " + $(this).data("name") + " is a required field.");
+                validated = false;
+              }
+              else{
+                $(this).css("border", "1px solid #cccccc");
+                $(this).css("background-color", "transparent");
+              }
+            }
+          });
+          return validated;
+        }
+      });
+    </script>
+  </body>
 </html>
