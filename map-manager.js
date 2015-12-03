@@ -1,5 +1,7 @@
 //change team constructor
 
+
+
 var initialMap;
 var elevationError[][][];
 
@@ -46,3 +48,8 @@ function getOnlyElevation(p){
 function getAllCellInfo(p){
   return initialMap.grid[p.x][p.y].layer;
 }
+module.exports.initialMap = initialMap;
+module.exports.elevationError = elevationError;
+module.exports.loadInitialSimulation = loadInitialSimulation;
+module.exports.getOnlyElevation = getOnlyElevation;
+module.exports.getAllCellInfo = getAllCellInfo;
