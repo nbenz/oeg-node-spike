@@ -8,13 +8,19 @@ var express = require('express'),
   UserManager = require('./user-manager');
 
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + 'public/index.html');
 });
 
 app.get('/director', function(req, res) {
-  res.sendFile(__dirname + '/director.html');
+  if(req.query.token && jwt.verify(req.query.token, config.jwtSecret) ) {
+    res.sendFile(__dirname + '/public/director-dashboard.html');
+  } else {
+    res.sendFile(__dirname + '/public/director.html');
+  }
+
 });
 
 app.post('/new-director', function(req, res) {

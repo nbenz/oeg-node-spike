@@ -2,14 +2,14 @@ var config = {};
 
 config.development = {
   env: 'development',
-  url: 'http://0.0.0.0',
+  url: '0.0.0.0',
   port: process.env.PORT || 8080,
   jwtSecret: 'OEG-game-so-fun'
 };
 
 config.test = {
   env: 'test',
-  url: 'http://0.0.0.0',
+  url: '0.0.0.0',
   port: process.env.PORT || 9000,
   jwtSecret: 'SpecialTestSecretJustForTesting'
 }

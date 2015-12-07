@@ -7,7 +7,7 @@ var root = '../..',
   server = require(root + '/libs/server'),
   socket = require(root + '/libs/socket');
 
-var socketURL = config.url + ':' + config.port;
+var socketURL = 'http://' + config.url + ':' + config.port;
 var request = require('supertest')(socketURL);
 
 var options = {
