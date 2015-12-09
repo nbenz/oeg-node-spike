@@ -21,7 +21,6 @@ module.exports.listen = function(app) {
 
       socket.on('new bid', function(bid, fn) {
         bid.teamName = team.name;
-		bid.timeStamp = new Date().getTime();
         team.bids.push(bid);
         fn(200);
       });

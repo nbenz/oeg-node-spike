@@ -1,5 +1,5 @@
 function Bid(bidAmount, point) {
-  this.timeStamp = new Date();
+  this.timeStamp = new Date().getTime();
   this.landPoint = point;
   this.cost = bidAmount;
 }
