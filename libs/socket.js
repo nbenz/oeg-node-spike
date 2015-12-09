@@ -4,6 +4,8 @@ var socketio = require('socket.io'),
   UserManager = require('./user-manager'),
   config = require(root + '/config/config')();
 
+var io;
+
 module.exports.listen = function(app) {
   io = socketio.listen(app);
 
@@ -17,24 +19,45 @@ module.exports.listen = function(app) {
       var team = UserManager.getTeam(socket.decoded_token.name);
       team.id = socket.id;
 
-      socket.on('new bid', function(bid) {
+      socket.on('new bid', function(bid, fn) {
         bid.teamName = team.name;
+		bid.timeStamp = new Date().getTime();
         team.bids.push(bid);
+        fn(200);
       });
 
-      socket.on('drill request', function(drill) {
+      socket.on('new drill request', function(drill, fn) {
         drill.teamName = team.name;
         team.drillRequests.push(drill);
+        fn(200);
       });
 
-      socket.on('seismic request', function(seismicRequest) {
+      socket.on('new seismic request', function(seismicRequest, fn) {
         seismicRequest.teamName = team.name;
-        team.bids.push(seismicRequest);
+        team.seismicRequests.push(seismicRequest);
+        fn(200);
       });
     }
 
     if(socket.decoded_token.role === 'director') {
       UserManager.getDirector().id = socket.id;
+
+      socket.on('send event', function(payload) {
+        socket.broadcast.emit(payload.event, payload.data);
+      });
     }
   });
+}
+
+module.exports.purgeData = function() {
+  io.sockets.sockets.forEach(function(s) {
+    s.disconnect(true);
+  });
+
+  UserManager.removeDirector();
+  UserManager.removeTeams();
+}
+
+module.exports.exit = function() {
+  io.close();
 }
