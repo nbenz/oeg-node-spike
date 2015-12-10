@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <title>Oil Exploration Game (OEG)</title>
+    <title>OEG</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -13,12 +13,13 @@
     <link rel='stylesheet' type='text/css' href='global.css'>
   </head>
   <body>
-    <div class="wrapper" id="index">
-      <h2>Oil Exploration Game (OEG)</h2>
-      <ul class="big-buttons-wrap cf">
-        <a href="director"><li class="button">I'm a Director</li></a>
-        <a href="team"><li class="button">I'm a Team/Player</li></a>
-    </ul>
-  </div>
-</body>
+    <div class="wrapper" id="director-dashboard">
+      <h2>OEG</h2>
+      <hr>
+      <h4>Welcome Team <span id="team-name"></span>.</h4>
+      <script>
+        $('#team-name').text(localStorage.team_name);
+      </script>
+    </div>
+  </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <title>Create New Director</title>
+    <title>Create New Team</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -19,29 +19,29 @@
     <div class="wrapper" id="director-main">
       <div class="form-toggle-wrap">
         <ul class="form-toggle cf" id="director-form-toggle">
-          <li class="active" data-title="Create New Director" data-content="director-create-container"><a href="#">Create New Director</a></li>
-          <li data-title="Login As Director" data-content="director-login-container"><a href="#">Existing Director Login</a></li>
+          <li class="active" data-title="Create New Team" data-content="director-create-container"><a href="#">Create New Team</a></li>
+          <li data-title="Login As Team" data-content="director-login-container"><a href="#">Existing Team Login</a></li>
         </ul>
       </div>
       <div class="form-toggle-buffer"></div>
       <div class="form-toggle-content-wrap">
         <div id="director-create-container" data-title="Create New Director">
-          <h2>Create New OEG Director</h2>
+          <h2>Create New OEG Team</h2>
           <form id="director-create" name="director_new">
-            <p>Director Name:</p>
-            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
-            <p>Director Pasword:</p>
-            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+            <p>Team Name:</p>
+            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Team Name (required)">
+            <p>Team Pasword:</p>
+            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Team Password (required)">
             <input type="submit" class="button" value="Submit">
           </form>
         </div>
         <div id="director-login-container" style="display: none;" data-title="Director Login">
-          <h2>Login as Existing Director</h2>
+          <h2>Login as Existing Team</h2>
           <form id="director-login">
-            <p>Director Name:</p>
-            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Director Name (required)">
-            <p>Director Pasword:</p>
-            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Director Password (required)">
+            <p>Team Name:</p>
+            <input type="text" name="director_name" class="validate" data-name="Director Name" placeholder="Team Name (required)">
+            <p>Team Pasword:</p>
+            <input type="password" name="director_password" class="validate" data-name="Director Password" placeholder="Team Password (required)">
             <input type="submit" class="button" value="Submit">
           </form>
         </div>
@@ -64,10 +64,10 @@
             $(formElem + ' input[type="submit"]').addClass("disabled");
             var endpoint;
             if(formElem == '#director-create'){
-              endpoint = '/new-director';
+              endpoint = '/new-team';
             }
             else{
-              endpoint = '/director-login';
+              endpoint = '/team-login';
             }
             $.ajax({
               url: endpoint,
@@ -77,9 +77,9 @@
             }).done(function( data ){
               if(data.token != null || data.token != ""){
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("director_name", director_info.name);
+                localStorage.setItem("team_name", director_info.name);
                 var port = window.location.port || 80;
-                window.location.assign('http://' + window.location.hostname + ':' + port + '/director?token=' + data.token);
+                window.location.assign('http://' + window.location.hostname + ':' + port + '/team?token=' + data.token);
               }
             });
           }
