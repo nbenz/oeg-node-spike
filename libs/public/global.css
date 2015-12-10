@@ -19,6 +19,25 @@ input[type="text"],input[type="password"]{width: 100%;padding: 8px; margin: 4px 
 .button{padding: 14px 4px; background: #353535; text-transform: uppercase;  margin: 16px 0; min-width: 160px;  border: 0px; border-radius: 100px; -moz-border-radius: 100px; -webkit-border-radius: 100px; transition: all 150ms ease; -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; cursor: pointer; letter-spacing: 1px; color: #ffffff }
 .button:hover{background: #000000;}
 .disabled{ background: #c7c7c7; color: #4c4c4c;}
+ul.big-buttons-wrap{
+  margin: 0 0 0 0;
+  position: relative;
+  padding: 0 0 0 0;
+}
+ul.big-buttons-wrap li{
+  margin: 10px 2%;
+  width: 46%;
+  box-sizing: border-box;
+  float: left;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+ul.big-buttons-wrap li:hover{
+}
+ul.big-buttons-wrap li a{
+  text-decoration: none;
+}
 /* ====== Form Toggle ====== */
 .form-toggle-wrap{position: absolute; top: 0; left: 0; width: 100%; background: #eeeeee;}
 .form-toggle-buffer{height: 36px; width: 100%; display: block; padding: 0 0 0 0;}

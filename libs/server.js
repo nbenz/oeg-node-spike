@@ -22,7 +22,13 @@ app.get('/director', function(req, res) {
   }
 
 });
-
+app.get('/team', function(req, res){
+  if(req.query.token && jwt.verify(req.query.token, config.jwtSecret)){
+    res.sendFile(__dirname + '/public/oeg.html');
+  } else{
+    res.sendFile(__dirname + '/public/team.html');
+  }
+});
 app.post('/new-director', function(req, res) {
   var status = 201;
 
